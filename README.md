@@ -160,17 +160,17 @@ Please note that the random token is the same token that was used in the entry p
 The most important part when interfacing with the ISS+ are the two API calls that are used by the ISS+ and the SP in order to exchange information securely (out-of-band communication). As we mentioned earlier the ISS+ has an open design and can be extended to support custom SP needs. The current version of the ISS+ supports JSON formatted communication.
 The first step for the ISS+ is to retrieve the list of Attributes. So the ISS+ will communicate with a URL provided by the SP presenting the token. If everything is correct (i.e. valid token) the data returned by the URL must be in the following format:
 
-{
-  "status":"OK",
-  "list":{
-    "attribute name ":{
-      "value":attribute value or null,
-      "complex":0 or 1 depending on the value above,
-      "required":0 if optional or 1 if mandatory
-    },
-...
-  }
-}
+    {
+      "status":"OK",
+      "list":{
+        "attribute name ":{
+          "value":attribute value or null,
+          "complex":0 or 1 depending on the value above,
+          "required":0 if optional or 1 if mandatory
+        },
+       ...
+      }
+    }
 
 Each field is described in the table below. Please note that the list may contain one or more attributes and in some cases the value field may contain information, but in most cases it will be null.
 Field Name Details:
@@ -180,38 +180,35 @@ complex: In order to identify the contents of the value above we set this variab
 required: Identifies if the attribute is required in order to provide access to the SP service or not (0 if it is optional and 1 if mandatory).
 For clarity we also provide a sample output that the DA Attribute List Retrieval API must return:
 
-{
-  "status":"OK",
-    "list":{ 
-      "http://eidas.europa.eu/attributes/naturalperson/PersonIdentifier":{
-      "value":null,
-      "complex":"0",
-      "required":"1"
-    },
-...
-  }
-}
+    {
+      "status":"OK",
+        "list":{ 
+          "http://eidas.europa.eu/attributes/naturalperson/PersonIdentifier":{
+          "value":null,
+          "complex":"0",
+          "required":"1"
+        },
+    ...
+      }
+    }
 
 ### Attribute Values Storage API
 
 Once the ISS+ has received the populated Attribute List it must deliver these values to the SP. This is performed via JSON again. The only difference is that the ISS+ is not retrieving data from the SP, but sending data. Using the HTTP POST method the SS send a JSON object with the following format:
 
-{
-  "attribute name ":{
-    "value":attribute value or null,
-    "complex":0 or 1 depending on the value above,
-    "required":0 if optional or 1 if mandatory
-  },
-...
-}
+    {
+      "attribute name ":{
+        "value":attribute value or null,
+        "complex":0 or 1 depending on the value above,
+        "required":0 if optional or 1 if mandatory
+      },
+    ...
+    }
 
 As we can see this object is identical with the list object we described in the previous section. The SP will respond with a JSON message stating if the save procedure was completed successful or not:
 
-{
-  "status":"OK"
-}
+    {
+      "status":"OK"
+    }
 
 If the response is OK, then the SS can redirect the user back to the SP using the appropriate point. 
-
-
-

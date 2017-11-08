@@ -67,6 +67,7 @@ The aforementioned directory contains the file eidasKeystore.jks, which must con
 In addition, the following information needs to be modified in the following configuration files:
 
 SignModule_SP.xml
+
         <entry key="response.sign.assertions">true</entry>
         <entry key="keyStorePath">eidasKeystore.jks</entry>
         <entry key="keyStorePassword">keystore_password</entry>
@@ -84,13 +85,14 @@ SignModule_SP.xml
 
 
 EncryptModule_SP.xml
+
     <!-- Key Encryption algorithm -->
     <entry key="key.encryption.algorithm">http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p</entry>
     <entry key="keyStorePath"> eidasKeystore.jks</entry>
     <entry key="keyStorePassword">keystore_password</entry>
     <entry key="keyPassword">SP_certificate_password</entry>
   
-  ...
+    ...
   
     <!--  If not present then no decryption will be applied on response -->
     <!-- Certificate containing instance private key-->
@@ -99,33 +101,35 @@ EncryptModule_SP.xml
     <entry key="keyStoreType">JKS</entry>
 
 sp.properties
-  #Sp Country
-  sp.country=Code of the SP’s Country (GR)
 
-  #Sp return url
-  sp.return= Return URL of the SP (i.e: https://ip:port/ISSPlus/Service Redirect)
-  sp.metadata.url= Metadata URL of the SP (i.e: https://ip:port/ISSPlus/metadata)
-  ….
-  sp.qaalevel=# 
-  The level of Assurance required by this SP for the provided authentication data.
-  1=Non-existent
-  2=Low
-  3=Substantial
-  4=High
-  ….
+    #Sp Country
+    sp.country=Code of the SP’s Country (GR)
 
-  #The Service URLs (that we provide support)
-  sp1.ds.url=SP Retrieve Requested Attributes Endpoint URL
-  sp1.ss.url=SP Receive Requested Values Endpoint URL
-  sp1.sr.url=SP Authentication success redirect URL
-  sp1.sf.url=SP Authentication failure/error redirect URL
-  sp1.mode=(json|ws) communication mode. 
+    #Sp return url
+    sp.return= Return URL of the SP (i.e: https://ip:port/ISSPlus/Service Redirect)
+    sp.metadata.url= Metadata URL of the SP (i.e: https://ip:port/ISSPlus/metadata)
+    ….
+    sp.qaalevel=# 
+    The level of Assurance required by this SP for the provided authentication data.
+    1=Non-existent
+    2=Low
+    3=Substantial
+    4=High
+    ….
+
+    #The Service URLs (that we provide support)
+    sp1.ds.url=SP Retrieve Requested Attributes Endpoint URL
+    sp1.ss.url=SP Receive Requested Values Endpoint URL
+    sp1.sr.url=SP Authentication success redirect URL
+    sp1.sf.url=SP Authentication failure/error redirect URL
+    sp1.mode=(json|ws) communication mode. 
 
 ### Interacting with ISS+
 
 The ISS+ has one entry point, one exit point and requires two API calls on the SP side:
 1. one URL in order to retrieve the list of Attributes to request from STORK,
 2. and a second URL to store the values of the Attribute that were returned from STORK.
+
 Both those URLs provide a Json formatted document. The format of the document is explained in Appendix II.
 For the remaining section we will assume that the ISS+ is installed and running in the following
 location: http://localhost/ISSPlus/ and the SP is installed and running in: http://localhost/da/. The first step for the SP is to create a unique random identifier. This identifier will be unique and different for each user request, much like a session ID. We call this unique identifier token and it will be used by the ISS+ and the SP in order to identify a specific user request. After the creation of the token the SP will redirect the user to the ISS+ entry point. For demonstration purposes we will assume that the unique token that was generated is: 1234567890, so the entry point of the ISS+ is:

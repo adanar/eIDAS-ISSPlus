@@ -51,8 +51,7 @@ The ISS+ package contains 1 file to facilitate the integration of a new SP to th
 1. ISSPlus.war:	The Java Web application package containing the ISS+ executables as well as the configuration files.
 
 ### Deploying the ISS+ app 	
-
-The ISS+ app is provided as a pre-built .war archive which can be easily deployed on a tomcat 7+ web server. 
+ 
 After deployment is complete, the following environmental variable needs to be set in the tomcat execution environment (either as OS/AS environment variable or command-line parameter): SP_CONFIG_REPOSITORY. The variable must point to the location of the file system where the ISS+ was deployed, followed by the subdirectories WEB-INF/classes
 
 ### Setting up the keystore 
@@ -62,7 +61,9 @@ The aforementioned directory contains the file eidasKeystore.jks, which must con
 2.	Obtain a certificate which identifies the SP (ie: the ISS+). The certificate must satisfy the criteria described in the eIDAS - Cryptographic requirements for the Interoperability Framework document , regarding SAML signing certificates.
 3.	Import the certificate in the keystore as a PrivateKeyEntry
 4.	Provide the Greek eIDAS Node team with the public certificate of the SP, to be added to the Greek eIDAS Node list of trusted SPs.
-Configuring the ISS+ app
+
+### Configuring the ISS+ app
+
 In addition, the following information needs to be modified in the following configuration files:
 
 SignModule_SP.xml

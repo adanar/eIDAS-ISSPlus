@@ -1,4 +1,4 @@
-# eIDAS-ISSPlus
+# eIDAS Interconnection Supporting Service Plus
 Web-App tool for facilitating SP - eIDAS infrastructure interconnection
 
 ## Introduction

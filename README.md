@@ -45,15 +45,18 @@ Current ISS+ functionality:
 2.	Only one ISS+ instance can support multiple SPs using different communication formats
 3.	Simple public web access to the log file of all requests served by the ISS+
 
-### Connecting to the Greek eIDAS Infrastructure consists of two main steps. The first one is setting up and deploying the ISS+ app on a separate server. The second step is setting up the SP (which can reside on another non-Java capable web server) to interact with ISS+.
+Connecting to the Greek eIDAS Infrastructure consists of two main steps. The first one is setting up and deploying the ISS+ app on a separate server. The second step is setting up the SP (which can reside on another non-Java capable web server) to interact with ISS+.
 The ISS+ package contains 1 file to facilitate the integration of a new SP to the Greek eIDAS Infrastructure:
 
-Filename	Purpose
-ISSPlus.war	The Java Web application package containing the ISS+ executables as well as the configuration files.
-Deploying the ISS+ app 	
+1. ISSPlus.war:	The Java Web application package containing the ISS+ executables as well as the configuration files.
+
+### Deploying the ISS+ app 	
+
 The ISS+ app is provided as a pre-built .war archive which can be easily deployed on a tomcat 7+ web server. 
 After deployment is complete, the following environmental variable needs to be set in the tomcat execution environment (either as OS/AS environment variable or command-line parameter): SP_CONFIG_REPOSITORY. The variable must point to the location of the file system where the ISS+ was deployed, followed by the subdirectories WEB-INF/classes
-Setting up the keystore 
+
+### Setting up the keystore 
+
 The aforementioned directory contains the file eidasKeystore.jks, which must contain all the necessary certificates for secure and trusted communication with the eIDAS Node. The following steps need to be executed in order to prepare the keystore for operation.
 1.	Change the keystore password (current password: “local-demo”)
 2.	Obtain a certificate which identifies the SP (ie: the ISS+). The certificate must satisfy the criteria described in the eIDAS - Cryptographic requirements for the Interoperability Framework document , regarding SAML signing certificates.
@@ -70,7 +73,7 @@ SignModule_SP.xml
         <entry key="issuer">SP_certificate_issuer</entry>
         <entry key="serialNumber">SP_certificate_serial_number</entry>
         <entry key="keyStoreType">JKS</entry>
-
+  
         <entry key="metadata.keyStorePath"> eidasKeystore.jks</entry>
         <entry key="metadata.keyStorePassword">keystore_password</entry>
         <entry key="metadata.keyPassword">SP_certificate_password</entry>
@@ -85,9 +88,9 @@ EncryptModule_SP.xml
     <entry key="keyStorePath"> eidasKeystore.jks</entry>
     <entry key="keyStorePassword">keystore_password</entry>
     <entry key="keyPassword">SP_certificate_password</entry>
-
+  
   ...
-
+  
     <!--  If not present then no decryption will be applied on response -->
     <!-- Certificate containing instance private key-->
     <entry key="responseDecryptionIssuer">SP_certificate_issuer</entry>
@@ -118,6 +121,7 @@ sp.properties
   sp1.mode=(json|ws) communication mode. 
 
 ### Interacting with ISS+
+
 The ISS+ has one entry point, one exit point and requires two API calls on the SP side:
 1. one URL in order to retrieve the list of Attributes to request from STORK,
 2. and a second URL to store the values of the Attribute that were returned from STORK.
